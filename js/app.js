@@ -32,16 +32,14 @@ function CreateNaveBar() {
 //https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Building_blocks/Events
 
 document.addEventListener("click", (e) => {
-  var id = '';
+  var id = "";
   if (e.target.classList.contains("menu__link")) {
-    id = e.srcElement.hash.replace('#', '');
+    id = e.srcElement.hash.replace("#", "");
     sections.forEach((section) => {
-      if(section.id == id) 
-        section.classList.add("your-active-class");
-      else 
-        section.classList.remove("your-active-class")
+      if (section.id == id) section.classList.add("your-active-class");
+      else section.classList.remove("your-active-class");
     });
-  } ;
+  }
   e.preventDefault();
 });
 

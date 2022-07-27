@@ -30,7 +30,7 @@ function CreateNaveBar() {
 //https://www.javascripttutorial.net/dom/css/check-if-an-element-is-visible-in-the-viewport/
 function checkPosition() {
   sections.forEach((sec) => {
-    if (isInViewport(sec)) {
+    if (!isInViewport(sec)) {
       sec.classList.add("your-active-class");
     } else {
       sec.classList.remove("your-active-class");
@@ -49,7 +49,8 @@ function isInViewport(sec) {
 //https://stackoverflow.com/questions/43665548/allow-link-to-work-while-adding-active-class
 //https://redstapler.co/toggle-active-button-state-javascript/
 //https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Building_blocks/Events
-document.addEventListener("click", (e) => {
+
+function clickSection(e){
   var id = "";
   if (e.target.classList.contains("menu__link")) {
     id = e.srcElement.hash.replace("#", "");
@@ -62,9 +63,14 @@ document.addEventListener("click", (e) => {
     });
   }
   e.preventDefault();
+
+}
+document.addEventListener("click", (e) => {
+  setTimeout(function() {clickSection(e)}, 500);
 });
 
+
 //----------------------------------------------------
-// window.addEventListener("scroll", checkPosition);
+window.addEventListener("scroll", checkPosition);
 
 CreateNaveBar();

@@ -9,8 +9,11 @@ const navbarMenu = document.querySelector("#navbar__list");
 
 function CreateNaveBar() {
   let fragment = document.createDocumentFragment();
+  let count = 0;
   sections.forEach((section) => {
+    count++;
     var li = document.createElement("li");
+    li.setAttribute("id", "menu__link" + count);
     let a = document.createElement("a");
     a.innerText = section.getAttribute("data-nav");
     a.href = `#${section.getAttribute("id")}`;
@@ -32,6 +35,7 @@ function checkPosition() {
   sections.forEach((sec) => {
     if (!isInViewport(sec)) {
       sec.classList.add("your-active-class");
+      activeLi(sec);
     } else {
       sec.classList.remove("your-active-class");
     }
@@ -41,16 +45,30 @@ function checkPosition() {
 function isInViewport(sec) {
   let rect = sec.getBoundingClientRect();
   let h = document.documentElement.clientHeight;
+  console.log("sec: " + sec.id + " - h: " + h);
   let top = rect.top > 0 && rect.top < h;
   return top;
 }
 
+function activeLi(sec) {
+  let li = "";
+  li = document.getElementById("menu__link" + sec.id.replace("section", ""));
+  if (li) li.classList.add("active-li");
+
+  var elem = "";
+  for (let i = 1; i < 5; i++) {
+    elem = document.getElementById("menu__link" + i);
+    if (elem.id != li.id) {
+      elem.classList.remove("active-li");
+    }
+  }
+}
 // Listen for all clicks on the document
 //https://stackoverflow.com/questions/43665548/allow-link-to-work-while-adding-active-class
 //https://redstapler.co/toggle-active-button-state-javascript/
 //https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Building_blocks/Events
 
-function clickSection(e){
+function clickSection(e) {
   var id = "";
   if (e.target.classList.contains("menu__link")) {
     id = e.srcElement.hash.replace("#", "");
@@ -63,12 +81,12 @@ function clickSection(e){
     });
   }
   e.preventDefault();
-
 }
 document.addEventListener("click", (e) => {
-  setTimeout(function() {clickSection(e)}, 500);
+  setTimeout(function () {
+    clickSection(e);
+  }, 500);
 });
-
 
 //----------------------------------------------------
 window.addEventListener("scroll", checkPosition);
